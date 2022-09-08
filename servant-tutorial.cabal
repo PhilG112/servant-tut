@@ -54,6 +54,8 @@ executable servant-tutorial
         , UsersApi
         , Models.User
         , BiggerApi
+        , NestedApis
+        , ModularApi
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:

@@ -8,4 +8,11 @@ For reference, here’s a list of some combinators from servant:
 - QueryFlag "something" gets turned into an argument of type Bool.
 - QueryParams "something" a gets turned into an argument of type [a].
 - ReqBody contentTypes a gets turned into an argument of type a.
+ 
+---
 
+- ***data***: zero or more constructors, each can contain zero or more values.
+
+- ***newtype***: similar to above but exactly one constructor and one value in that constructor, and has the exact same runtime representation as the value that it stores.
+
+- ***type***: type synonym, compiler more or less forgets about it once it is expanded.

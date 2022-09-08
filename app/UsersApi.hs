@@ -51,3 +51,31 @@ server2 = return users2
 
 userApi2 :: Proxy UserApi2
 userApi2 = Proxy
+
+
+type MyHeadfulHandler =
+    Get '[JSON] (Headers '[Header "X-A-Bool" Bool, Header "X-An-Int" Int] User)
+
+myHeadfulHandler :: Server MyHeadfulHandler
+myHeadfulHandler = return $ addHeader True $ addHeader 1797 albert
+
+type MyMaybeHeaderHandler = 
+    Capture "withHeader" Bool
+        :> Get '[JSON] (Headers '[Header "X-An-Int" Int] User)
+
+myMaybeHeaderHandler :: Server MyMaybeHeaderHandler
+myMaybeHeaderHandler x = return $ if x then addHeader 1797 albert
+                                       else noHeader albert
+
+-- Serving static files
+
+type StaticApi = "static" :> Raw
+
+staticApi :: Proxy StaticApi
+staticApi = Proxy
+
+staticServer :: Server StaticApi
+staticServer = serveDirectoryWebApp "static-files"
+
+staticApp :: Application
+staticApp = serve staticApi staticServer

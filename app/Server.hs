@@ -49,6 +49,7 @@ import qualified Text.Blaze.Html
 
 import UsersApi ( server1, userApi, server2, userApi2 )
 import BiggerApi ( biggerApi, biggerServer )
+import Models.User
 
 -- 'serve' comes from servant and hands you a WAI Application,
 -- which you can think of as an "abstract" web application,
