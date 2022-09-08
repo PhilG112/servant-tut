@@ -121,6 +121,7 @@ type APIFor a i =
             DeleteNoContent -- delete an 'a'
          )
 
+
 -- Build the appropriate 'Server'
 -- given the handlers of the right type.
 serverFor :: Handler [a]
@@ -129,27 +130,23 @@ serverFor :: Handler [a]
           -> (i -> a -> Handler NoContent)
           -> (i -> Handler NoContent)
           -> Server (APIFor a i)
-serverFor = listing :<|> ops
-
+serverFor list create get update delete =
+    list :<|> create :<|> (\i -> get i :<|> update i :<|> delete i)
+    
+server :: Server (APIFor a i)
+server = serverFor listing creating getById updating deleting
     where
         listing :: Handler [a]
         listing = error ""
 
-        ops a i =
-            creating a
-            :<|> getById i
-            :<|> updating i a
-            :<|> deleting i
+        creating :: a -> Handler NoContent
+        creating a = error ""
 
-            where
-                creating :: a -> Handler NoContent
-                creating a = error ""
+        getById :: i -> Handler a
+        getById id = error ""
 
-                getById :: i -> Handler a
-                getById id = error ""
+        updating :: i -> a -> Handler NoContent
+        updating i a = error ""
 
-                updating :: i -> a -> Handler NoContent
-                updating i a = error ""
-
-                deleting :: i -> Handler NoContent
-                deleting i = error ""
+        deleting :: i -> Handler NoContent
+        deleting i = error ""
